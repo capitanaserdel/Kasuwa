@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kasuwa/screens/edit_product_screen.dart';
 import 'package:kasuwa/screens/order_screen.dart';
 import 'package:kasuwa/screens/user_product_screen.dart';
 import './provider/order.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
           ProductDetails.routeName: (cxt) => ProductDetails(),
           CartScreen.routeName: (cxt) => CartScreen(),
           OrdersScreen.routeName: (cxt) => OrdersScreen(),
-          UserProductScreen.routeName: (cxt) => UserProductScreen()
+          UserProductScreen.routeName: (cxt) => UserProductScreen(),
+          EditProductScreen.routeName: (cxt) => EditProductScreen()
         },
       ),
     );
