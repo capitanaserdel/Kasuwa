@@ -4,6 +4,7 @@ import 'package:kasuwa/widget/user_product_item.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/add_drawer.dart';
+import 'edit_product_screen.dart';
 
 class UserProductScreen extends StatelessWidget {
 static const routeName = '/user-products';
@@ -15,7 +16,9 @@ static const routeName = '/user-products';
       appBar: AppBar(
         title: const Text('Your Product'),
         actions: [
-          IconButton(onPressed: (){}, icon:  const Icon(Icons.add))
+          IconButton(onPressed: (){
+            Navigator.of(context).pushNamed(EditProductScreen.routeName);
+          }, icon:  const Icon(Icons.add))
         ],
       ),
       drawer: AppDrawer(),
