@@ -42,6 +42,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _form.currentState?.save();
     print(_editedProduct.title);
     print(_editedProduct.description);
+    print(_editedProduct.description);
     print(_editedProduct.price);
     print(_editedProduct.imageUrl);
   }
