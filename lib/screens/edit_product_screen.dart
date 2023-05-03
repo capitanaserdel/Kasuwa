@@ -14,7 +14,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   var _editedProduct =
-      Product(id: null!, title: '', description: '', price: 0, imageUrl: '');
+      Product(id: '', title: '', description: '', price: 0, imageUrl: '');
 
   @override
   void iniState() {
@@ -39,6 +39,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    _form.currentState?.validate();
     _form.currentState?.save();
     print(_editedProduct.title);
     print(_editedProduct.description);
@@ -105,6 +106,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_descriptionFocusNode);
                   },
+                  validator: (value) {
+                       if (value!.isEmpty) {
+                         return 'Please provide a value';
+                       }
+                       return null;
+                  } ,
                   onSaved: (value) {
                     _editedProduct = Product(
                         title: _editedProduct.title,
