@@ -28,7 +28,11 @@ static const routeName = '/user-products';
             itemCount: prodtct.items.length,
             itemBuilder: (ctx,i) => Column(
               children: [
-                UserProductItem(prodtct.items[i].title,prodtct.items[i].id,),
+                UserProductItem(
+                  prodtct.items[i].id,
+                  prodtct.items[i].title,
+                  prodtct.items[i].imageUrl,
+                ),
                 Divider()
               ],
             )),
