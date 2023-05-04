@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kasuwa/provider/product.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/products_pro.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -49,11 +52,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void _saveForm() {
     _form.currentState?.validate();
     _form.currentState?.save();
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.description);
-    print(_editedProduct.price);
-    print(_editedProduct.imageUrl);
+    Provider.of<ProductsP>(context, listen: false).addProduct(_editedProduct);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -89,7 +89,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         price: _editedProduct.price,
                         description: _editedProduct.description,
                         imageUrl: _editedProduct.imageUrl,
-                        id: null!);
+                        id: '');
                   },
                 ),
                 TextFormField(
@@ -117,7 +117,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         price: double.parse(value!),
                         description: _editedProduct.description,
                         imageUrl: _editedProduct.imageUrl,
-                        id: null!);
+                        id: '');
                   },
                 ),
                 TextFormField(
@@ -145,7 +145,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         price: _editedProduct.price,
                         description: value!,
                         imageUrl: _editedProduct.imageUrl,
-                        id: null!);
+                        id:'');
                   },
                 ),
                 Row(
@@ -195,7 +195,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               price: _editedProduct.price,
                               description: _editedProduct.description,
                               imageUrl: value!,
-                              id: null!);
+                              id: '');
                         },
                       ),
                     )
