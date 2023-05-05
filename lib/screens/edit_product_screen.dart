@@ -5,7 +5,6 @@ import '../provider/product.dart';
 import '../provider/products_pro.dart';
 
 
-
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
 
@@ -43,7 +42,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final productId = ModalRoute.of(context)?.settings.arguments as String;
+      final productId = ModalRoute.of(context)!.settings.arguments as String?;
       if (productId != null) {
         _editedProduct =
             Provider.of<ProductsP>(context, listen: false).findById(productId);
@@ -90,7 +89,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState?.save();
-    if (_editedProduct.id != null) {
+    if (_editedProduct.id.isNotEmpty) {
       Provider.of<ProductsP>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
