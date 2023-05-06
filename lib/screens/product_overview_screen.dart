@@ -43,7 +43,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                     PopupMenuItem(child: Text('Show All'),value:FilterOptions.All,),
                   ]),
            Consumer<Cart>(
-             builder: (_, cart ,ch) => Badge(
+             builder: (_, cart ,ch) => Bagde(
                value: cart.itemC.toString(),
              color: Theme.of(context).accentColor,
              child:ch!
