@@ -515,6 +515,9 @@
 //           ),
 //         ),
 //       ),
+//%ANDROID_HOME%\platform_tools
+//%USERPROFILE%\.dotnet\tools
+//
 //     );
 //   }
 // }

@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'product.dart';
 
 class ProductsP with ChangeNotifier {
@@ -78,18 +80,43 @@ class ProductsP with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    final newProduct = Product(
-        id: DateTime.now().toString(),
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl);
-    _items.add(newProduct);
-    // _items.insert(0, newProduct); // at the start of the list
-    notifyListeners();
+    Map data = {
+      'title': product.title,
+      'description': product.description,
+      'imageUrl': product.imageUrl,
+      'price': product.price,
+      'isFavorite': product.isFavorite,
+    };
+    print(data);
+
+    String body = json.encode(data);
+    var url = Uri.parse('https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?auth=YOUR_API_KEY');
+    http
+        .post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json",
+      },
+      body: body,
+    )
+        .then((response) {
+      final newProduct = Product(
+          id: json.decode(response.body)['name'],
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl);
+      _items.add(newProduct);
+      // _items.insert(0, newProduct); // at the start of the list
+      notifyListeners();
+    }).catchError((error) {
+      print('Error adding product: $error');
+    });
   }
 
-  // Future<void> fetchAndSetProducts() async {
+
+// Future<void> fetchAndSetProducts() async {
   //   final url = Uri.https('flutter-update.firebaseio.com', '/products.json');
   //   try {
   //     final response = await http.get(url);
