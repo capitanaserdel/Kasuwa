@@ -91,7 +91,7 @@ class ProductsP with ChangeNotifier {
 
     String body = json.encode(data);
     var url = Uri.parse(
-        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
     try {
       final response = await http.post(
         url,
