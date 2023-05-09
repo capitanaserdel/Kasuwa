@@ -21,7 +21,7 @@ class CartScreen extends StatelessWidget {
         children: [
           Card(
             margin: EdgeInsets.all(15),
-            child: Padding(
+             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,18 +38,7 @@ class CartScreen extends StatelessWidget {
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  OutlinedButton(
-                    onPressed: () {
-                      Provider.of<Orders>(context,listen: false).addOrder(
-                          cart.items.values.toList(),
-                          cart.totalAmount,
-                      );
-                      cart.clear();
-                    },
-                    child: Text(
-                      'ORDER NOW',
-                    ),
-                  ),
+                  orderBtn(cart: cart),
                 ],
               ),
             ),
@@ -68,6 +57,44 @@ class CartScreen extends StatelessWidget {
                     cart.items.values.toList()[i].title,
                   )))
         ],
+      ),
+    );
+  }
+}
+
+class orderBtn extends StatefulWidget {
+  const orderBtn({
+    super.key,
+    required this.cart,
+  });
+
+  final Cart cart;
+
+  @override
+  State<orderBtn> createState() => _orderBtnState();
+}
+
+class _orderBtnState extends State<orderBtn> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed:( widget.cart.totalAmount <= 0 || _isLoading) ? null : () async {
+        setState(() {
+          _isLoading = true;
+        });
+       await Provider.of<Orders>(context,listen: false).addOrder(
+            widget.cart.items.values.toList(),
+            widget.cart.totalAmount,
+        );
+        setState(() {
+          _isLoading = false;
+        });
+        widget.cart.clear();
+      },
+      child: _isLoading ? CircularProgressIndicator() : Text(
+        'ORDER NOW',
       ),
     );
   }

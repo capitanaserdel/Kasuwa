@@ -27,7 +27,7 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     var url = Uri.parse(
-        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/orders.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
     final timestamp = DateTime.now();
   final response = await http.post(url,body: json.encode({
       'amount':total,
@@ -50,40 +50,10 @@ class Orders with ChangeNotifier {
     );
     notifyListeners();
   }
-  // Future<void> addProduct(Product product) async {
-  //   Map data = {
-  //     'title': product.title,
-  //     'description': product.description,
-  //     'imageUrl': product.imageUrl,
-  //     'price': product.price,
-  //     'isFavorite': product.isFavorite,
-  //   };
-  //   print(data);
-  //
-  //   String body = json.encode(data);
-  //   var url = Uri.parse(
-  //       'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
-  //   try {
-  //     final response = await http.post(
-  //       url,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "accept": "application/json",
-  //       },
-  //       body: body,
-  //     );
-  //     final newProduct = Product(
-  //         id: json.decode(response.body)['name'],
-  //         title: product.title,
-  //         description: product.description,
-  //         price: product.price,
-  //         imageUrl: product.imageUrl);
-  //     _items.add(newProduct);
-  //     // _items.insert(0, newProduct); // at the start of the list
-  //     notifyListeners();
-  //   } catch (error) {
-  //     print(error);
-  //     throw (error);
-  //   }
-  // }
+  Future<void> fetchAndSetOrder() async {
+    var url = Uri.parse(
+        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+  final response = await http.get(url);
+    print(json.decode(response.body));
+  }
 }
