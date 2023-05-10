@@ -29,16 +29,19 @@ class Orders with ChangeNotifier {
     var url = Uri.parse(
         'https://kasuwadb-787d9-default-rtdb.firebaseio.com/orders.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
     final timestamp = DateTime.now();
-  final response = await http.post(url,body: json.encode({
-      'amount':total,
-      'dateTime':timestamp.toIso8601String(),
-      'product': cartProducts.map((cp) => {
-        'id':cp.id,
-        'title':cp.title,
-        'quantity':cp.quantity,
-        'price':cp.price
-      }).toList()
-    }));
+    final response = await http.post(url,
+        body: json.encode({
+          'amount': total,
+          'dateTime': timestamp.toIso8601String(),
+          'product': cartProducts
+              .map((cp) => {
+                    'id': cp.id,
+                    'title': cp.title,
+                    'quantity': cp.quantity,
+                    'price': cp.price
+                  })
+              .toList()
+        }));
     _orders.insert(
       0,
       OrderItem(
@@ -50,10 +53,130 @@ class Orders with ChangeNotifier {
     );
     notifyListeners();
   }
+  // Future<void> fetchAndSetOrder() async {
+  //   final url = Uri.parse(
+  //       'https://kasuwadb-787d9-default-rtdb.firebaseio.com/orders.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+  //     final response = await http.get(url);
+  //     final List<OrderItem> loadedOrders = [];
+  //     final extractedData = json.decode(response.body) as Map<String, dynamic>;
+  //     // if (extractedData == null) {
+  //     //   return;
+  //     // }
+  //     extractedData.forEach((orderId, orderData) {
+  //       loadedOrders.add(
+  //         OrderItem(
+  //           id: orderId,
+  //           dateTime: DateTime.parse(orderData['dateTime']),
+  //           amount: orderData['amount'],
+  //           products: (orderData['products'] as List<dynamic>)
+  //               .map(
+  //                 (item) => CartItem(
+  //               id: item['id'],
+  //               title: item['title'],
+  //               quantity: item['quantity'],
+  //               price: item['price'],
+  //             ),
+  //           )
+  //               .toList(),
+  //         ),
+  //       );
+  //     });
+  //     _orders = loadedOrders.reversed.toList();
+  //     notifyListeners();
+  //   }
+
   Future<void> fetchAndSetOrder() async {
-    var url = Uri.parse(
-        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
-  final response = await http.get(url);
-    print(json.decode(response.body));
+    final url = Uri.parse(
+        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/orders.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData.isEmpty) {
+      return;
+    }
+    final List<OrderItem> loadedOrders = [];
+    extractedData.forEach((orderId, orderData) {
+      loadedOrders.add(
+        OrderItem(
+          id: orderId,
+          amount: orderData['amount'],
+          dateTime: DateTime.parse(orderData['dateTime']),
+          products: (orderData['products'] != null
+              ? (orderData['products'] as List<dynamic>)
+              .map(
+                (item) => CartItem(
+              id: item['id'],
+              price: item['price'],
+              quantity: item['quantity'],
+              title: item['title'],
+            ),
+          )
+              .toList()
+              : []),
+        ),
+      );
+    });
+    _orders = loadedOrders.reversed.toList();
+    notifyListeners();
   }
+
+  // Future<void> fetchAndSetOrder() async {
+  //   final url = Uri.parse(
+  //       'https://kasuwadb-787d9-default-rtdb.firebaseio.com/orders.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+  //   final response = await http.get(url);
+  //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
+  //   if (extractedData.isEmpty) {
+  //     return;
+  //   }
+  //   final List<OrderItem> loadedOrders = [];
+  //   extractedData.forEach((orderId, orderData) {
+  //     loadedOrders.add(
+  //       OrderItem(
+  //         id: orderId,
+  //         amount: orderData['amount'],
+  //         dateTime: DateTime.parse(orderData['dateTime']),
+  //         products:(orderData['products'] != null
+  //             ?  ( orderData['products'] as List<dynamic>)
+  //             .map(
+  //               (item) => CartItem(
+  //             id: item['id'],
+  //             price: item['price'],
+  //             quantity: item['quantity'],
+  //             title: item['title'],
+  //           ),
+  //         )
+  //             .toList()
+  //             : []),
+  //       ),
+  //     );
+  //   });
+  //   _orders = loadedOrders;
+  //   notifyListeners();
+  // }
+
+
+    // Future<void> fetchAndSetOrder() async {
+  //   var url = Uri.parse(
+  //       'https://kasuwadb-787d9-default-rtdb.firebaseio.com/orders.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+  //   final response = await http.get(url);
+  //   final List<OrderItem> loadedOrders = [];
+  //   final extractedData = json.decode(response.body) as Map<String, dynamic>?;
+  //   extractedData?.forEach((orderId, orderData) {
+  //     loadedOrders.add(OrderItem(
+  //         id: orderId,
+  //       dateTime: DateTime.parse(orderData['dateTime']),
+  //         amount: orderData['amount'],
+  //         products: (orderData['product'] as List<dynamic>)
+  //             .map((item) => CartItem(
+  //                 id: item['id'],
+  //                 title: item['price'],
+  //                 quantity: item['quantity'],
+  //                 price: item['item']))
+  //             .toList(),
+  //         )
+  //     );
+  //   });
+  //   _orders = loadedOrders;
+  //   notifyListeners();
+  //   print(json.decode(response.body));
+  // }
 }
