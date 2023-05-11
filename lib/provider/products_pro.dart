@@ -41,6 +41,9 @@ class ProductsP with ChangeNotifier {
     // ),
   ];
 
+final String authToken;
+
+ProductsP(this.authToken,this._items);
   List<Product> get items {
     // if (_showFavoriteOnly){
     //   return _items.where((proItem) => proItem.isFavorite).toList();
@@ -119,7 +122,7 @@ class ProductsP with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     var url = Uri.parse(
-        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
+        'https://kasuwadb-787d9-default-rtdb.firebaseio.com/products.json?auth=$authToken?AIzaSyDO99Q5nW_ZRpG_ifnXM8AQMhomVlYL63k');
     try {
       final response = await http.get(url);
       print(json.decode(response.body ));

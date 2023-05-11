@@ -13,17 +13,18 @@ import './screens/product_overview_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Auth auth = Auth();
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-        ChangeNotifierProvider(
-        create: (_) => ProductsP(),
+        ChangeNotifierProxyProvider<Auth, ProductsP>(
+        create: (_) => ProductsP(auth.token??'', []),
+          update: ( ctx, auth, previousProductsP ) => ProductsP(auth.token?? '', previousProductsP == null ? [] : previousProductsP.items),
         ),
       ChangeNotifierProvider(
         create: (_) => Cart(),),
@@ -32,13 +33,13 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(
         create: (_) => Auth(),),
     ],
-      child: MaterialApp(
+      child: Consumer<Auth>(builder: (ctx, auth, _) => MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.purple,
           accentColor: Colors.orange,
         ),
-        home:  AuthScreen(),
+        home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
         routes: {
           ProductDetails.routeName: (cxt) => ProductDetails(),
           CartScreen.routeName: (cxt) => CartScreen(),
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           EditProductScreen.routeName: (cxt) => EditProductScreen()
         },
       ),
+      )
     );
   }
 }
