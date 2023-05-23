@@ -13,6 +13,8 @@ import './screens/product_detail.dart';
 import './screens/product_overview_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'helper/custom_route.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -51,6 +53,12 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.purple,
               accentColor: Colors.orange,
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android: CustomPageTransitionBuilder(),
+                  TargetPlatform.iOS: CustomPageTransitionBuilder(),
+                },
+              ),
             ),
             home: auth.isAuth
                 ? ProductOverviewScreen()
