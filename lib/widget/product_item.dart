@@ -26,8 +26,9 @@ class Productitem extends StatelessWidget {
               .pushNamed(ProductDetails.routeName, arguments: pro.id);
         },
         child: GridTile(
-          child: Image.network(
-            pro.imageUrl,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/product-placeholder.png'),
+            image: NetworkImage(pro.imageUrl),
             fit: BoxFit.cover,
           ),
           footer: GridTileBar(
@@ -49,13 +50,15 @@ class Productitem extends StatelessWidget {
               builder: (ctx, cart, _) => IconButton(
                 onPressed: () {
                   cart.addItems(pro.id, pro.price, pro.title);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Added items to cart!'),
-                        duration: Duration(seconds: 2),
-                        action: SnackBarAction(label: 'UNDO', onPressed: (){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Added items to cart!'),
+                    duration: Duration(seconds: 2),
+                    action: SnackBarAction(
+                        label: 'UNDO',
+                        onPressed: () {
                           cart.removeSingleItem(pro.id);
                         }),
-                      ));
+                  ));
                 },
                 icon: Icon(Icons.shopping_cart),
                 color: Theme.of(context).accentColor,
