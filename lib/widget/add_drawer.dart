@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kasuwa/helper/custom_route.dart';
 import 'package:kasuwa/screens/order_screen.dart';
 import 'package:kasuwa/screens/user_product_screen.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ class AppDrawer extends StatelessWidget {
       Divider(),
       ListTile(leading: Icon(Icons.payment),title: Text('Orders'),
         onTap: (){
+          // Navigator.of(context).pushReplacement(CustomRoute(builder: (ctx) => OrdersScreen()));
           Navigator.of(context).pushReplacementNamed(OrdersScreen.routeName);
         } ,
       ),

@@ -26,10 +26,13 @@ class Productitem extends StatelessWidget {
               .pushNamed(ProductDetails.routeName, arguments: pro.id);
         },
         child: GridTile(
-          child: FadeInImage(
-            placeholder: AssetImage('assets/images/product-placeholder.png'),
-            image: NetworkImage(pro.imageUrl),
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: pro.id,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/product-placeholder.png'),
+              image: NetworkImage(pro.imageUrl),
+              fit: BoxFit.cover,
+            ),
           ),
           footer: GridTileBar(
             leading: Consumer<Product>(

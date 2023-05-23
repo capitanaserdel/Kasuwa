@@ -13,40 +13,51 @@ class ProductDetails extends StatelessWidget {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(productspData.title),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: h * 0.5,
-                width: w,
+        // appBar: AppBar(
+        //   title: Text(productspData.title),
+        // ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight:h * 0.5,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(title: Text(productspData.title),
+              background: Hero(
+                tag: productspData.id,
                 child: Image.network(
                   productspData.imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),
+              ),
+            ),
+            SliverList(delegate: SliverChildListDelegate([
               SizedBox(
                 height: h * 0.024,
               ),
               Text(
                 '\$${productspData.price}',
                 style: TextStyle(color: Colors.grey, fontSize: 20),
+                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: h * 0.024,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10 ),
-                width: w,
+                  padding: EdgeInsets.symmetric(horizontal: 10 ),
+                  width: w,
                   child: Text(
-                productspData.description,
-                textAlign: TextAlign.center,
-                softWrap: true,
-              )),
-            ],
-          ),
+                    productspData.description,
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                  )),
+              SizedBox(
+                height: h * 0.8,
+              ),
+            ]
+            )
+            )
+          ],
         ));
   }
 }
