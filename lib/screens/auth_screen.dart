@@ -50,14 +50,11 @@ class AuthScreen extends StatelessWidget {
                 width: getBig(context),
                 height: getBig(context),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF00ACC1),
-                          Color(0xFF00E5FF),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter),
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(colors: [
+                    Color(0xFF00ACC1),
+                    Color(0xFF00E5FF),
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 ),
                 child: Center(
                   child: Text(
@@ -95,7 +92,9 @@ class AuthScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                      SizedBox(height: h * 0.3,),
+                  SizedBox(
+                    height: h * 0.3,
+                  ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
                     child: AuthCard(),
@@ -105,7 +104,11 @@ class AuthScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          GestureDetector(child: ImageIcon(AssetImage('assets/images/facebook'))),
+                          GestureDetector(
+                              child: ImageIcon(
+                                
+                                  AssetImage('assets/images/facebook.png')
+                              )),
                           CircleAvatar(),
                           CircleAvatar(),
                         ],
@@ -265,13 +268,15 @@ class _AuthCardState extends State<AuthCard>
                   margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
+                      color: Colors.cyan,
+                      borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      border: InputBorder.none,
-                        icon: Icon(Icons.email,color: Colors.white,),
+                        border: InputBorder.none,
+                        icon: Icon(
+                          Icons.email,
+                          color: Colors.white,
+                        ),
                         labelStyle: TextStyle(color: Colors.white),
                         labelText: 'E-Mail'),
                     keyboardType: TextInputType.emailAddress,
@@ -291,12 +296,14 @@ class _AuthCardState extends State<AuthCard>
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   decoration: BoxDecoration(
                       color: Colors.cyan,
-                      borderRadius: BorderRadius.circular(10)
-                  ),
+                      borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        icon: Icon(Icons.vpn_key_rounded,color: Colors.white,),
+                        icon: Icon(
+                          Icons.vpn_key_rounded,
+                          color: Colors.white,
+                        ),
                         labelStyle: TextStyle(color: Colors.white),
                         labelText: 'Password'),
                     obscureText: true,
@@ -330,16 +337,17 @@ class _AuthCardState extends State<AuthCard>
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       decoration: BoxDecoration(
                           color: Colors.cyan,
-                          borderRadius: BorderRadius.circular(10)
-                      ),
+                          borderRadius: BorderRadius.circular(10)),
                       child: TextFormField(
                         enabled: _authMode == AuthMode.Signup,
-                        decoration:
-                            InputDecoration(
-                                border: InputBorder.none,
-                                icon: Icon(Icons.vpn_key_rounded,color: Colors.white,),
-                                labelStyle: TextStyle(color: Colors.white),
-                                labelText: 'Confirm Password'),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.vpn_key_rounded,
+                              color: Colors.white,
+                            ),
+                            labelStyle: TextStyle(color: Colors.white),
+                            labelText: 'Confirm Password'),
                         obscureText: true,
                         validator: _authMode == AuthMode.Signup
                             ? (value) {
@@ -373,9 +381,12 @@ class _AuthCardState extends State<AuthCard>
                         backgroundColor: Colors.cyan,
                         child: GestureDetector(
                           onTap: _submit,
-                          child: Icon(_authMode == AuthMode.Login
-                              ? Icons.arrow_forward
-                              : Icons.arrow_forward,color: Colors.white,),
+                          child: Icon(
+                            _authMode == AuthMode.Login
+                                ? Icons.arrow_forward
+                                : Icons.arrow_forward,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       // ElevatedButton(
