@@ -11,28 +11,82 @@ enum AuthMode { Signup, Login }
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
 
+  double getSmall(BuildContext context) =>
+      MediaQuery.of(context).size.width * 2 / 3;
+  double getBig(BuildContext context) =>
+      MediaQuery.of(context).size.width * 7 / 8;
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    double h = MediaQuery.of(context).size.height;
     // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
     // transformConfig.translate(-10.0);
     return Scaffold(
+      backgroundColor: Colors.white,
       // resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
-              ),
-            ),
-          ),
+          Positioned(
+              right: -getSmall(context) / 3,
+              top: -getSmall(context) / 3,
+              child: Container(
+                width: getSmall(context),
+                height: getSmall(context),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF00BCD4),
+                          Color(0xFF18FFFF),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter)),
+              )),
+          Positioned(
+              left: -getBig(context) / 4,
+              top: -getBig(context) / 4,
+              child: Container(
+                width: getBig(context),
+                height: getBig(context),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF00ACC1),
+                          Color(0xFF00E5FF),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter),
+                ),
+                child: Center(
+                  child: Text(
+                    'Kasuwa',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 50,
+                      fontFamily: 'Anton',
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              )),
+          Positioned(
+              right: -getBig(context) / 2,
+              bottom: -getBig(context) / 2,
+              child: Container(
+                width: getBig(context),
+                height: getBig(context),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xFFE0F2F1),
+                          Color(0xFFE0F2F1),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter)),
+              )),
           SingleChildScrollView(
             child: Container(
               height: deviceSize.height,
@@ -41,39 +95,22 @@ class AuthScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      // ..translate(-10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.deepOrange.shade900,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        'Kasuwa',
-                        style: TextStyle(
-                          color: Colors.cyan,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ),
+                      SizedBox(height: h * 0.3,),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
                     child: AuthCard(),
+                  ),
+                  Flexible(
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(),
+                          CircleAvatar(),
+                          CircleAvatar(),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -113,10 +150,8 @@ class _AuthCardState extends State<AuthCard>
     _heightAnimation = Tween<Size>(
             begin: Size(double.infinity, 260), end: Size(double.infinity, 320))
         .animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
-    _opacityAnimation = Tween(begin: 0.0,end: 1.0).animate( CurvedAnimation(parent: _controller, curve: Curves.easeIn));
-    // _heightAnimation.addListener(() => setState(() {
-    //
-    // }));
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
   }
 
   @override
@@ -207,16 +242,15 @@ class _AuthCardState extends State<AuthCard>
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 8.0,
+      elevation: 0,
       child: AnimatedContainer(
-        height: _authMode == AuthMode.Signup ? 320 : 260,
+        height: _authMode == AuthMode.Signup ? 340 : 280,
         // height: _heightAnimation.value.height,
         constraints: BoxConstraints(
-          minHeight: _authMode == AuthMode.Signup ? 320 : 260,
+          minHeight: _authMode == AuthMode.Signup ? 340 : 280,
         ),
         width: deviceSize.width * 0.75,
         padding: EdgeInsets.all(16.0),
@@ -227,41 +261,85 @@ class _AuthCardState extends State<AuthCard>
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _authData['email'] = value!;
-                  },
+                Container(
+                  margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    color: Colors.cyan,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                        icon: Icon(Icons.email,color: Colors.white,),
+                        labelStyle: TextStyle(color: Colors.white),
+                        labelText: 'E-Mail'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty || !value.contains('@')) {
+                        return 'Invalid email!';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['email'] = value!;
+                    },
+                  ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value!.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
-                    }
-                  },
-                  onSaved: (value) {
-                    _authData['password'] = value!;
-                  },
+                Container(
+                  margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  decoration: BoxDecoration(
+                      color: Colors.cyan,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        icon: Icon(Icons.vpn_key_rounded,color: Colors.white,),
+                        labelStyle: TextStyle(color: Colors.white),
+                        labelText: 'Password'),
+                    obscureText: true,
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 5) {
+                        return 'Password is too short!';
+                      }
+                    },
+                    onSaved: (value) {
+                      _authData['password'] = value!;
+                    },
+                  ),
                 ),
-                  AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeIn,
-                    constraints: BoxConstraints(minHeight: _authMode == AuthMode.Signup ?60 :0,maxHeight:_authMode == AuthMode.Signup ? 120 :0 ),
-                    child: FadeTransition(
-                      opacity: _opacityAnimation,
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children:
+                // [
+                //   Text('Forgot Password')
+                // ],),
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
+                  constraints: BoxConstraints(
+                      minHeight: _authMode == AuthMode.Signup ? 60 : 0,
+                      maxHeight: _authMode == AuthMode.Signup ? 120 : 0),
+                  child: FadeTransition(
+                    opacity: _opacityAnimation,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      decoration: BoxDecoration(
+                          color: Colors.cyan,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
                       child: TextFormField(
                         enabled: _authMode == AuthMode.Signup,
-                        decoration: InputDecoration(labelText: 'Confirm Password'),
+                        decoration:
+                            InputDecoration(
+                                border: InputBorder.none,
+                                icon: Icon(Icons.vpn_key_rounded,color: Colors.white,),
+                                labelStyle: TextStyle(color: Colors.white),
+                                labelText: 'Confirm Password'),
                         obscureText: true,
                         validator: _authMode == AuthMode.Signup
                             ? (value) {
@@ -273,25 +351,40 @@ class _AuthCardState extends State<AuthCard>
                       ),
                     ),
                   ),
+                ),
                 SizedBox(
                   height: 20,
                 ),
                 if (_isLoading)
                   CircularProgressIndicator()
                 else
-                  ElevatedButton(
-                    onPressed: _submit,
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                  Row(
+                    children: [
+                      OutlinedButton(
+                        onPressed: _switchAuthMode,
+                        child: Text(
+                          (_authMode == AuthMode.Login
+                              ? 'SIGNUP INSTEAD'
+                              : 'LOGIN INSTEAD'),
+                        ),
+                      ),
+                      Spacer(),
+                      CircleAvatar(
+                        backgroundColor: Colors.cyan,
+                        child: GestureDetector(
+                          onTap: _submit,
+                          child: Icon(_authMode == AuthMode.Login
+                              ? Icons.arrow_forward
+                              : Icons.arrow_forward,color: Colors.white,),
+                        ),
+                      ),
+                      // ElevatedButton(
+                      //   onPressed: _submit,
+                      //   child:
+                      //       Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',style: TextStyle(),),
+                      // ),
+                    ],
                   ),
-                OutlinedButton(
-                  onPressed: _switchAuthMode,
-                  child: Text(
-                    (_authMode == AuthMode.Login
-                        ? 'SIGNUP INSTEAD'
-                        : 'LOGIN INSTEAD'),
-                  ),
-                )
               ],
             ),
           ),

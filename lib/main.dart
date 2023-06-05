@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           builder: (ctx, auth, _) => MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.purple,
+              primarySwatch: Colors.cyan,
               accentColor: Colors.orange,
               pageTransitionsTheme: PageTransitionsTheme(
                 builders: {
