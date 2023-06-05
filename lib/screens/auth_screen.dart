@@ -105,7 +105,7 @@ class AuthScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(),
+                          GestureDetector(child: ImageIcon(AssetImage('assets/images/facebook'))),
                           CircleAvatar(),
                           CircleAvatar(),
                         ],
