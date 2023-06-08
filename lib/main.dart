@@ -4,6 +4,7 @@ import 'package:kasuwa/screens/auth_screen.dart';
 import 'package:kasuwa/screens/edit_product_screen.dart';
 import 'package:kasuwa/screens/order_screen.dart';
 import 'package:kasuwa/screens/splash-screen.dart';
+import 'package:kasuwa/screens/splashScreen.dart';
 import 'package:kasuwa/screens/user_product_screen.dart';
 import './provider/order.dart';
 import './screens/cart_screen.dart';
@@ -60,7 +61,9 @@ class MyApp extends StatelessWidget {
                 },
               ),
             ),
-            home: auth.isAuth
+            home:
+            // WithBuilder(),
+            auth.isAuth
                 ? ProductOverviewScreen()
                 : FutureBuilder(
                     future: auth.tryAutoLogin(),

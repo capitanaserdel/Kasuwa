@@ -20,6 +20,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
     // transformConfig.translate(-10.0);
     return Scaffold(
@@ -78,8 +79,8 @@ class AuthScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                         colors: [
-                          Color(0xFFE0F2F1),
-                          Color(0xFFE0F2F1),
+                          Color(0xFFB2EBF2),
+                          Color(0xFFB2EBF2),
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter)),
@@ -105,12 +106,31 @@ class AuthScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                              child: ImageIcon(
-                                
-                                  AssetImage('assets/images/facebook.png')
-                              )),
-                          CircleAvatar(),
-                          CircleAvatar(),
+                            onTap:(){},
+                              child: Container(
+                                // decoration: BoxDecoration(
+                                //   // borderRadius: BorderRadius.circular(100),
+                                //   color: Colors.cyan,),
+                                child: Image(
+                                  height: h * 0.04, fit: BoxFit.cover,
+                                  image:  AssetImage('assets/images/facebook.png'),
+                                ),
+                              )
+                          ),
+                          SizedBox(width: w * 0.04,),
+                          GestureDetector(
+                              child: Image(
+                                height: h * 0.04, fit: BoxFit.cover,
+                                image:  AssetImage('assets/images/g.png'),
+                              )
+                          ),
+                          SizedBox(width: w * 0.04),
+                          GestureDetector(
+                              child: Image(
+                                height: h * 0.05, fit: BoxFit.cover,
+                                image:  AssetImage('assets/images/w.png'),
+                              )
+                              ),
                         ],
                       ),
                     ),
@@ -268,7 +288,7 @@ class _AuthCardState extends State<AuthCard>
                   margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   decoration: BoxDecoration(
-                      color: Colors.cyan,
+                      color: Colors.cyanAccent,
                       borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -295,7 +315,7 @@ class _AuthCardState extends State<AuthCard>
                   margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   decoration: BoxDecoration(
-                      color: Colors.cyan,
+                      color: Colors.cyanAccent,
                       borderRadius: BorderRadius.circular(10)),
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -336,7 +356,7 @@ class _AuthCardState extends State<AuthCard>
                       margin: EdgeInsets.fromLTRB(8, 8, 8, 2),
                       padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       decoration: BoxDecoration(
-                          color: Colors.cyan,
+                          color: Colors.cyanAccent,
                           borderRadius: BorderRadius.circular(10)),
                       child: TextFormField(
                         enabled: _authMode == AuthMode.Signup,
